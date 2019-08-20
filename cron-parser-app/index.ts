@@ -1,12 +1,23 @@
 import * as commander from 'commander';
 
-commander
-  .version('1.0.0')
-  .name('CRON Parser');
+const program = new commander.Command;
 
-commander
-  .command('inputExpression')
-  .description('Input a CRON expression')
-  .action(() => {
-    console.log('AHOY M8Y');
+program
+  .version('1.0.0')
+  .name('CRON Parser')
+  .description("Command line app to parse CRON expressions");
+
+console.log('');
+console.log(' CRON EXPRESSION PARSER ');
+console.log('===================================');
+console.log('');
+
+program
+  .command('cron-parser <cronExpression>')
+  .alias('cp')
+  .description('CRON expression parser')
+  .action((cronExpression) => {
+    console.log(cronExpression);
   });
+
+program.parse(process.argv);

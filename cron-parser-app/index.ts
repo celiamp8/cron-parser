@@ -1,4 +1,5 @@
 import * as commander from 'commander';
+import * as parser from './expression-parser';
 
 const program = new commander.Command;
 
@@ -9,7 +10,7 @@ program
 
 console.log('');
 console.log(' CRON EXPRESSION PARSER ');
-console.log('===================================');
+console.log('========================');
 console.log('');
 
 program
@@ -17,7 +18,7 @@ program
   .alias('cp')
   .description('CRON expression parser')
   .action((cronExpression) => {
-    console.log(cronExpression);
+    console.log(parser.parseExpression(cronExpression));
   });
 
 program.parse(process.argv);

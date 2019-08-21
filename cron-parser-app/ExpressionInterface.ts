@@ -1,8 +1,8 @@
 export default interface ExpressionInterface {
-  minutes: any,
-  hours: any,
-  dayMonth: any,
-  month: any,
-  dayWeek: any,
+  minutes: string,
+  hours: string,
+  dayMonth: string,
+  month: string,
+  dayWeek: string,
   command: string
 }

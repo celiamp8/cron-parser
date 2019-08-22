@@ -18,14 +18,9 @@ program
   .alias('cp')
   .description('CRON expression parser')
   .action((cronExpression) => {
-    const parsedExpression = new ExpressionParser(cronExpression).getParsedExpression();
+    const parsedExpression = new ExpressionParser(cronExpression).getFormattedExpression();
     console.log('***');
-    console.log('Minutes: ' + parsedExpression.minutes);
-    console.log('Hours: ' + parsedExpression.hours);
-    console.log('Day of month: ' + parsedExpression.dayMonth);
-    console.log('Month: ' + parsedExpression.month);
-    console.log('Day of week: ' + parsedExpression.dayWeek);
-    console.log('Command: ' + parsedExpression.command);
+    console.log(parsedExpression);
     console.log('***');
   });
 

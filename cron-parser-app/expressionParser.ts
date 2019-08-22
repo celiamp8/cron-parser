@@ -27,4 +27,13 @@ export default class ExpressionParser {
   getParsedExpression() {
     return this.parsedExpression;
   }
+
+  getFormattedExpression() {
+    return `Minutes: ` + this.parsedExpression.minutes + `
+Hours: ` + this.parsedExpression.hours + `
+Day of month: ` + this.parsedExpression.dayMonth + `
+Month: ` + this.parsedExpression.month + `
+Day of week: ` + this.parsedExpression.dayWeek + `
+Command: ` + this.parsedExpression.command;
+  }
 }

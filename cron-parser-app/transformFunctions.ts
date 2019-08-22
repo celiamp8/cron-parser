@@ -27,8 +27,8 @@ export const transform = (type: string, range: string, incr?: number) => {
     min = parseInt(newValuesArr[0]);
     max = parseInt(newValuesArr[1]);
 
-    if (min < values[type].min_val || min > values[type].max_val) return 'ERROR: First input of interval out of range';
-    else if (max < values[type].min_val || max > values[type].max_val) return 'ERROR: Last input of interval out of range';
+    if (min > max || min < values[type].min_val || min > values[type].max_val) return 'ERROR: First input of interval out of range';
+    else if (max < min || max < values[type].min_val || max > values[type].max_val) return 'ERROR: Last input of interval out of range';
     else return loopFromIncrement(min, max, increment);
   }
   // Case for value '*' with/without increment: Leave max and min as default by type
@@ -54,7 +54,7 @@ const parseDashInterval = (type: string, num1: any, num2: any) => {
   return minMaxArr;
 }
 
-const loopFromIncrement = (min: number, max: number, increment: number): string => {
+export const loopFromIncrement = (min: number, max: number, increment: number): string => {
   let totalArr = [];
   for (let i = min; i <= max; i += increment) {
     totalArr.push(i);

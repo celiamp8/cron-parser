@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "tsc",
-    "cron-parser": "npx ts-node index.ts inputExpression "
+    "test": "mocha -r ts-node/register tests/*.spec.ts"
   },
   "dependencies": {},
   "devDependencies": {

@@ -1,5 +1,5 @@
 import * as commander from 'commander';
-import ExpressionParser from './expressionParser';
+import ExpressionParser from './src/expressionParser';
 
 const program = new commander.Command;
 

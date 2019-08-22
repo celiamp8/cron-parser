@@ -1,5 +1,6 @@
 import * as commander from 'commander';
 import * as parser from './expression-parser';
+import ExpressionInterface from './ExpressionInterface';
 
 const program = new commander.Command;
 
@@ -18,7 +19,15 @@ program
   .alias('cp')
   .description('CRON expression parser')
   .action((cronExpression) => {
-    console.log(parser.parseExpression(cronExpression));
+    const parsedExpression = parser.parseExpression(cronExpression);
+    console.log('***');
+    console.log('Minutes: ' + parsedExpression.minutes);
+    console.log('Hours: ' + parsedExpression.hours);
+    console.log('Day of month: ' + parsedExpression.dayMonth);
+    console.log('Month: ' + parsedExpression.month);
+    console.log('Day of week: ' + parsedExpression.dayWeek);
+    console.log('Command: ' + parsedExpression.command);
+    console.log('***');
   });
 
 program.parse(process.argv);

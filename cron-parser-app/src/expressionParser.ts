@@ -1,6 +1,6 @@
 
-import ExpressionInterface from './expressionInterface';
-import * as tf from './transformFunctions';
+import ExpressionInterface from './helpers/expressionInterface';
+import * as tf from './helpers/transformFunctions';
 
 export default class ExpressionParser {
   parsedExpression: ExpressionInterface;

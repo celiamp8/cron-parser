@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import ExpressionParser from '../ExpressionParser';
+import ExpressionParser from '../src/expressionParser';
 
 describe('valid values', function () {
   it('single values', function () {

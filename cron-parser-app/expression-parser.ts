@@ -2,24 +2,16 @@ import values from './allowed-values';
 import ExpressionInterface from './ExpressionInterface';
 
 export const parseExpression = (expression: string) => {
-  if (validateCron(expression) == true) {
-    let expArr = splitExpression(expression);
-    let parsedExp: ExpressionInterface = {
-      minutes: transform('minutes', expArr[0]) || '',
-      hours: transform('hours', expArr[1]) || '',
-      dayMonth: transform('dayMonth', expArr[2]) || '',
-      month: transform('month', expArr[3]) || '',
-      dayWeek: transform('dayWeek', expArr[4]) || '',
-      command: expArr[5]
-    };
-    return parsedExp;
-  } else {
-    return 'ERROR: Invalid expression!';
-  }
-}
-
-const validateCron = (expression: string) => {
-  return expression !== undefined || expression !== '';
+  let expArr = splitExpression(expression);
+  let parsedExp: ExpressionInterface = {
+    minutes: transform('minutes', expArr[0]) || '',
+    hours: transform('hours', expArr[1]) || '',
+    dayMonth: transform('dayMonth', expArr[2]) || '',
+    month: transform('month', expArr[3]) || '',
+    dayWeek: transform('dayWeek', expArr[4]) || '',
+    command: expArr[5]
+  };
+  return parsedExp;
 }
 
 const splitExpression = (expression: string) => {
@@ -41,9 +33,12 @@ const transform = (type: string, range: string, incr?: number) => {
   else if (range.includes('/')) {
     const parts = range.split('/', 2);
     const newIncrement = parseInt(parts[1].toString());
-    const newRange = parts[0].toString();
-    const newExpression: string = transform(type, newRange, newIncrement);
-    return newExpression;
+    if (newIncrement < 1 || newIncrement > values[type].max_val) return 'ERROR: Increment out of range';
+    else {
+      const newRange = parts[0].toString();
+      const newExpression: string = transform(type, newRange, newIncrement);
+      return newExpression;
+    }
   }
   // Case for intervals separated by '-': Set the appropiate min/max values and loop through them
   else if (range.includes('-')) {
@@ -51,7 +46,10 @@ const transform = (type: string, range: string, incr?: number) => {
     const newValuesArr = parseDashInterval(type, parts[0].toString(), parts[1].toString());
     min = parseInt(newValuesArr[0]);
     max = parseInt(newValuesArr[1]);
-    return loopFromIncrement(min, max, increment);
+
+    if (min < values[type].min_val || min > values[type].max_val) return 'ERROR: First input of interval out of range';
+    else if (max < values[type].min_val || max > values[type].max_val) return 'ERROR: Last input of interval out of range';
+    else return loopFromIncrement(min, max, increment);
   }
   // Case for value '*' with/without increment: Leave max and min as default by type
   else if (range === '*') {
@@ -64,7 +62,8 @@ const transform = (type: string, range: string, incr?: number) => {
   }
   // Default case for numeric inputs
   else {
-    return range;
+    if (parseInt(range) >= values[type].min_val && parseInt(range) <= values[type].max_val) return range;
+    else return 'ERROR: Input out of range';
   }
 }
 

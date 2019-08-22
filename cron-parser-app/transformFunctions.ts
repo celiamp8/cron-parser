@@ -1,4 +1,4 @@
-import values from './allowed-values';
+import values from './allowedValues';
 
 export const transform = (type: string, range: string, incr?: number) => {
   let increment = incr || 1;

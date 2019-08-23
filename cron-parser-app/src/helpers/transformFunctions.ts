@@ -43,15 +43,7 @@ export const transform = (type: string, range: string, incr?: number) => {
     }
     // Case for comma separated values: Return in a string separated by spaces
     else if (range.includes(',')) {
-      let err = false;
-      const parts = range.split(',');
-      parts.forEach(part => {
-        if (parseInt(part) < values[type].min_val || parseInt(part) > values[type].max_val) {
-          err = true;
-        }
-      });
-      if (err) return 'ERROR: Some of the provided values are invalid';
-      else return parts.join(' ');
+      return parseCommaSeparated(type, range);
     }
     // Default case for numeric inputs
     else {
@@ -68,7 +60,19 @@ const parseDashInterval = (type: string, num1: any, num2: any) => {
   return minMaxArr;
 }
 
-export const loopFromIncrement = (min: number, max: number, increment: number): string => {
+const parseCommaSeparated = (type: string, range: string) => {
+  let err = false;
+  const parts = range.split(',');
+  parts.forEach(part => {
+    if (parseInt(part) < values[type].min_val || parseInt(part) > values[type].max_val) {
+      err = true;
+    }
+  });
+  if (err) return 'ERROR: Some of the provided values are invalid';
+  else return parts.join(' ');
+}
+
+const loopFromIncrement = (min: number, max: number, increment: number): string => {
   let totalArr = [];
   for (let i = min; i <= max; i += increment) {
     totalArr.push(i);

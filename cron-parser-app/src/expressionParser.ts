@@ -14,7 +14,7 @@ export default class ExpressionParser {
       dayMonth: tf.transform('dayMonth', this.expArr[2]) || '',
       month: tf.transform('month', this.expArr[3]) || '',
       dayWeek: tf.transform('dayWeek', this.expArr[4]) || '',
-      command: this.expArr[5]
+      command: this.expArr.slice(5, this.expArr.length).join(' ')
     }
   }
 

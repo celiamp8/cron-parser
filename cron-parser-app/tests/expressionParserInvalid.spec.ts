@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import ExpressionParser from '../src/expressionParser';
 
 describe('invalid values', function () {
-  it('single values out of range', function () {
+  it('single numbers out of range', function () {
     let result = new ExpressionParser(" 66 24 32 13 0 command/invalid/single ").getFormattedExpression();
 
     expect(result).equal(
@@ -38,6 +38,19 @@ Day of month: ERROR: Last input of interval out of range
 Month: ERROR: Last input of interval out of range
 Day of week: ERROR: Last input of interval out of range
 Command: command/invalid/lastinterval`
+    );
+  });
+
+  it('non expected characters', function () {
+    let result = new ExpressionParser(" [] (9-14) */sth 1-5= etc command/invalid/nonexpected ").getFormattedExpression();
+
+    expect(result).equal(
+      `Minutes: ERROR: Invalid expression
+Hours: ERROR: Invalid expression
+Day of month: ERROR: Invalid expression
+Month: ERROR: Invalid expression
+Day of week: ERROR: Invalid expression
+Command: command/invalid/nonexpected`
     );
   });
 });

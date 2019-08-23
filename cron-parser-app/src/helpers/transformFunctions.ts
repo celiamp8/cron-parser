@@ -43,8 +43,15 @@ export const transform = (type: string, range: string, incr?: number) => {
     }
     // Case for comma separated values: Return in a string separated by spaces
     else if (range.includes(',')) {
+      let err = false;
       const parts = range.split(',');
-      return parts.join(' ');
+      parts.forEach(part => {
+        if (parseInt(part) < values[type].min_val || parseInt(part) > values[type].max_val) {
+          err = true;
+        }
+      });
+      if (err) return 'ERROR: Some of the provided values are invalid';
+      else return parts.join(' ');
     }
     // Default case for numeric inputs
     else {

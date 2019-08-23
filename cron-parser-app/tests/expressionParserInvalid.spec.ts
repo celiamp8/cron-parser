@@ -15,6 +15,19 @@ Command: command/invalid/single`
     );
   });
 
+  it('comma separated numbers out of range', function () {
+    let result = new ExpressionParser(" 4,33,77 90,100,300,400 3,35 0,7 8,1 command/invalid/comma ").getFormattedExpression();
+
+    expect(result).equal(
+      `Minutes: ERROR: Some of the provided values are invalid
+Hours: ERROR: Some of the provided values are invalid
+Day of month: ERROR: Some of the provided values are invalid
+Month: ERROR: Some of the provided values are invalid
+Day of week: ERROR: Some of the provided values are invalid
+Command: command/invalid/comma`
+    );
+  });
+
   it('interval first values out of range', function () {
     let result = new ExpressionParser(" 60-3 55-* 30-10 6-3 0-1 command/invalid/firstinterval ").getFormattedExpression();
 

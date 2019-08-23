@@ -67,6 +67,19 @@ Command: command/increments`
     );
   });
 
+  it('comma separated values', function () {
+    let result = new ExpressionParser(" 1,15,30 4,5,6 7,30 3,4,5,8,9,11 5,6 command/comma ").getFormattedExpression();
+
+    expect(result).equal(
+      `Minutes: 1 15 30
+Hours: 4 5 6
+Day of month: 7 30
+Month: 3 4 5 8 9 11
+Day of week: 5 6
+Command: command/comma`
+    );
+  });
+
   it('multiple values', function () {
     let result = new ExpressionParser(" 1-40 */5 3-*/2 *-4 ? command/multivals ").getFormattedExpression();
 

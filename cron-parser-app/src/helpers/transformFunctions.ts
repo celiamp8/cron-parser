@@ -64,9 +64,7 @@ const parseCommaSeparated = (type: string, range: string) => {
   let err = false;
   const parts = range.split(',');
   parts.forEach(part => {
-    if (parseInt(part) < values[type].min_val || parseInt(part) > values[type].max_val) {
-      err = true;
-    }
+    if (parseInt(part) < values[type].min_val || parseInt(part) > values[type].max_val) err = true;
   });
   if (err) return 'ERROR: Some of the provided values are invalid';
   else return parts.join(' ');

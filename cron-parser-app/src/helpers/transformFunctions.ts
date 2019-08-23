@@ -19,8 +19,9 @@ export const transform = (type: string, range: string, incr?: number) => {
     else if (range.includes('/')) {
       const parts = range.split('/', 2);
       const newIncrement = parseInt(parts[1].toString());
-      if (newIncrement < 1 || newIncrement == undefined || newIncrement > values[type].max_val) return 'ERROR: Increment out of range';
-      else {
+      if (newIncrement < 1 || newIncrement == undefined || newIncrement > values[type].max_val) {
+        return 'ERROR: Increment out of range';
+      } else {
         const newRange = parts[0].toString();
         const newExpression: string = transform(type, newRange, newIncrement);
         return newExpression;
@@ -33,9 +34,13 @@ export const transform = (type: string, range: string, incr?: number) => {
       min = parseInt(newValuesArr[0]);
       max = parseInt(newValuesArr[1]);
 
-      if (min > max || min < values[type].min_val || min > values[type].max_val) return 'ERROR: First input of interval out of range';
-      else if (max < min || max < values[type].min_val || max > values[type].max_val) return 'ERROR: Last input of interval out of range';
-      else return loopFromIncrement(min, max, increment);
+      if (min > max || min < values[type].min_val || min > values[type].max_val) {
+        return 'ERROR: First input of interval out of range';
+      } else if (max < min || max < values[type].min_val || max > values[type].max_val) {
+        return 'ERROR: Last input of interval out of range';
+      } else {
+        return loopFromIncrement(min, max, increment);
+      }
     }
     // Case for value '*' with/without increment: Leave max and min as default by type
     else if (range === '*') {
@@ -47,8 +52,11 @@ export const transform = (type: string, range: string, incr?: number) => {
     }
     // Default case for numeric inputs
     else {
-      if (parseInt(range) >= values[type].min_val && parseInt(range) <= values[type].max_val) return range;
-      else return 'ERROR: Input out of range';
+      if (parseInt(range) >= values[type].min_val && parseInt(range) <= values[type].max_val) {
+        return range;
+      } else {
+        return 'ERROR: Input out of range';
+      }
     }
   }
 }
@@ -64,10 +72,15 @@ const parseCommaSeparated = (type: string, range: string) => {
   let err = false;
   const parts = range.split(',');
   parts.forEach(part => {
-    if (parseInt(part) < values[type].min_val || parseInt(part) > values[type].max_val) err = true;
+    if (parseInt(part) < values[type].min_val || parseInt(part) > values[type].max_val) {
+      err = true;
+    }
   });
-  if (err) return 'ERROR: Some of the provided values are invalid';
-  else return parts.join(' ');
+  if (err) {
+    return 'ERROR: Some of the provided values are invalid';
+  } else {
+    return parts.join(' ');
+  }
 }
 
 const loopFromIncrement = (min: number, max: number, increment: number): string => {
